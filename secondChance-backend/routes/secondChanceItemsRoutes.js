@@ -1,15 +1,10 @@
-const express = require('express');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-const router = express.Router();
-const connectToDatabase = require('../models/db');
-const logger = require('../logger');
-
-// Define the upload directory path
-const directoryPath = 'public/images';
-
-// Set up storage for uploaded files
+const express = require('express')
+const multer = require('multer')
+const path = require('path')
+const router = express.Router()
+const connectToDatabase = require('../models/db')
+const logger = require('../logger')
+const directoryPath = 'public/images'
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, directoryPath); // Specify the upload directory
@@ -17,9 +12,9 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     cb(null, file.originalname); // Use the original file name
   },
-});
+})
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage })
 
 
 // Get all secondChanceItems
@@ -74,7 +69,7 @@ router.get('/:id', async (req, res, next) => {
         const collection = db.collection("secondChanceItems");
         //Step 4: task 3 - insert code here
         const id = req.params.id;
-        const secondChanceItem = await collection.findOne({ id: id });
+        const secondChanceItem = await collection.findOne({ id });
         //Step 4: task 4 - insert code here
         if (!secondChanceItem) {
             return res.status(404).send("secondChanceItem not found");
