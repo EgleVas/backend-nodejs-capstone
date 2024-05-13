@@ -7,9 +7,9 @@ router.get('/', async (req, res, next) => {
   try {
     const db = await connectToDatabase()
     const collection = db.collection(process.env.MONGO_COLLECTION)
-    let query = {}
+    const query = {}
     if (req.query.name && req.query.name.trim() !== '') {
-      query.name = { $regex: req.query.name, $options: "i" }
+      query.name = { $regex: req.query.name, $options: 'i' }
     }
     if (req.query.category) {
       query.category = req.query.category
@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
     if (req.query.condition) {
       query.condition = req.query.condition
     }
-    if (req.query.age_years) {            
+    if (req.query.age_years) {
       query.age_years = { $lte: parseInt(req.query.age_years) }
     }
     const gifts = await collection.find(query).toArray()
